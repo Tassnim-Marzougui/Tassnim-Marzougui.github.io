@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tassnim Marzougui — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --accent: #7c5cfc;
+    --accent2: #c77dff;
+    --gold: #f0a500;
+    --text: #e8e6f0;
+    --muted: #7a788a;
+    --border: rgba(124,92,252,0.18);
+    --glow: rgba(124,92,252,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── GRADIENT BG BLOBS ── */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -200px; }
+  .blob-2 { width: 500px; height: 500px; background: var(--accent2); bottom: -150px; right: -150px; }
+  .blob-3 { width: 300px; height: 300px; background: var(--gold); top: 40%; left: 50%; opacity: 0.07; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.75);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-inner { max-width: 800px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(124,92,252,0.12);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-name span {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+  }
+
+  .hero-title {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 0 30px var(--glow);
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px var(--glow); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    transition: background 0.25s, border-color 0.25s;
+  }
+
+  .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); }
+
+  .hero-socials {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+
+  .hero-socials a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.3s;
+  }
+  .hero-socials a:hover { color: var(--accent2); }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 4rem;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .skill-card:hover::before { opacity: 1; }
+
+  .skill-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .skill-cat {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: var(--accent2);
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background: rgba(124,92,252,0.1);
+    border: 1px solid rgba(124,92,252,0.2);
+    border-radius: 6px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(124,92,252,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .project-card:hover { border-color: rgba(124,92,252,0.4); }
+  .project-card:hover::after { opacity: 1; }
+
+  .project-year {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+
+  .project-subtitle {
+    color: var(--accent2);
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+  }
+
+  .project-desc { color: var(--muted); font-size: 0.92rem; }
+  .project-desc ul { list-style: none; padding: 0; }
+  .project-desc li {
+    padding: 0.3rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .project-desc li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.8em;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .project-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+    color: rgba(124,92,252,0.1);
+    line-height: 1;
+    user-select: none;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--surface); }
+
+  .timeline { position: relative; padding-left: 2rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 2rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.4rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 15px var(--glow);
+    transform: translateX(-4px);
+  }
+
+  .timeline-date {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-company {
+    color: var(--accent2);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .timeline-points { color: var(--muted); font-size: 0.9rem; }
+  .timeline-points li {
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+    list-style: none;
+  }
+  .timeline-points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75em;
+    top: 0.05em;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .edu-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .edu-card:hover { border-color: var(--accent); }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .edu-school { color: var(--accent2); font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .edu-year { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.08em; }
+
+  .edu-mention {
+    display: inline-block;
+    margin-top: 0.8rem;
+    background: rgba(240,165,0,0.12);
+    border: 1px solid rgba(240,165,0,0.3);
+    border-radius: 6px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── LANGUAGES ── */
+  .lang-grid { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+  .lang-card {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .lang-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .lang-level { color: var(--muted); font-size: 0.82rem; }
+
+  .lang-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    margin-top: 1rem;
+    overflow: hidden;
+  }
+
+  .lang-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform-origin: left;
+    animation: barGrow 1.2s ease both;
+  }
+
+  @keyframes barGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--surface);
+    text-align: center;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-inner .section-label { justify-content: center; }
+  .contact-inner .section-label::after { display: none; }
+
+  .contact-email {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    margin: 1.5rem 0;
+    transition: color 0.3s;
+  }
+
+  .contact-email:hover { color: var(--accent2); }
+
+  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 4rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-number { display: none; }
+    .edu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background blobs -->
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">TM</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#education">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🔍 Disponible — Stage 2 mois</div>
+    <h1 class="hero-name">
+      Tassnim
+      <span>Marzougui</span>
+    </h1>
+    <p class="hero-title">Étudiante Ingénieure · Data Science & Intelligence Artificielle</p>
+    <p class="hero-desc">
+      Passionnée par la donnée sous toutes ses formes — pipelines ETL, Machine Learning, NLP, Business Intelligence. 
+      Je transforme la complexité en valeur exploitable.
+    </p>
+    <div class="hero-ctas">
+      <a href="mailto:marzougui.tassnime@gmail.com" class="btn-primary">✉ Me contacter</a>
+      <a href="https://github.com/Tassnim-Marzougui" target="_blank" class="btn-outline">⬡ GitHub</a>
+      <a href="https://www.linkedin.com/in/tassnim-marzougui-150222219" target="_blank" class="btn-outline">in LinkedIn</a>
+    </div>
+    <div class="hero-socials">
+      <a href="tel:+21628618524">📞 +216 28 618 524</a>
+      <a href="#">📍 Ariana, Tunisie</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Expertise</div>
+    <h2 class="section-title">Compétences Techniques</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-cat">Langages</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">R</span><span class="tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-cat">Bases de Données</div>
+        <div class="skill-tags">
+          <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">SQL Server</span><span class="tag">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-cat">Data Engineering</div>
+        <div class="skill-tags">
+          <span class="tag">ETL</span><span class="tag">Data Pipelines</span><span class="tag">Data Cleaning</span><span class="tag">Transformation</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-cat">Machine Learning</div>
+        <div class="skill-tags">
+          <span class="tag">Scikit-learn</span><span class="tag">Classification</span><span class="tag">Évaluation</span><span class="tag">MLflow</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">💬</div>
+        <div class="skill-cat">NLP & IA</div>
+        <div class="skill-tags">
+          <span class="tag">spaCy</span><span class="tag">TF-IDF</span><span class="tag">Cosine Similarity</span><span class="tag">Chatbot</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">📊</div>
+        <div class="skill-cat">BI & Visualisation</div>
+        <div class="skill-tags">
+          <span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🔌</div>
+        <div class="skill-cat">Backend & API</div>
+        <div class="skill-tags">
+          <span class="tag">FastAPI</span><span class="tag">Django</span><span class="tag">REST API</span><span class="tag">Swagger</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🛠️</div>
+        <div class="skill-cat">Outils</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Jupyter</span><span class="tag">React</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Réalisations</div>
+    <h2 class="section-title">Projets Académiques</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div>
+          <div class="project-year">2026</div>
+          <div class="project-name">Khademny IA</div>
+          <div class="project-subtitle">Plateforme intelligente de matching CV / offres</div>
+          <div class="project-desc">
+            <ul>
+              <li>Moteur de recommandation basé sur TF-IDF et Cosine Similarity</li>
+              <li>NLP avec spaCy pour l'extraction de compétences depuis les CV</li>
+              <li>API documentée avec FastAPI + Swagger/OpenAPI</li>
+              <li>Chatbot & assistant vocal pour une UX enrichie</li>
+              <li>Architecture backend Django + SQL</li>
+            </ul>
+          </div>
+          <div class="project-stack">
+            <span class="tag">Python</span><span class="tag">Django</span><span class="tag">FastAPI</span>
+            <span class="tag">spaCy</span><span class="tag">NLP</span><span class="tag">ML</span><span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="project-number">01</div>
+      </div>
+
+      <div class="project-card reveal">
+        <div>
+          <div class="project-year">2025</div>
+          <div class="project-name">MedNova AI BI</div>
+          <div class="project-subtitle">Plateforme médicale Data / IA / BI</div>
+          <div class="project-desc">
+            <ul>
+              <li>Frontend React pour la consultation des résultats analytiques</li>
+              <li>API FastAPI avec documentation Swagger interactive</li>
+              <li>Nettoyage et structuration de données Excel & SQL</li>
+              <li>Dashboards Power BI pour le suivi des KPIs médicaux</li>
+            </ul>
+          </div>
+          <div class="project-stack">
+            <span class="tag">React</span><span class="tag">FastAPI</span><span class="tag">Power BI</span>
+            <span class="tag">SQL</span><span class="tag">Excel</span><span class="tag">Swagger</span>
+          </div>
+        </div>
+        <div class="project-number">02</div>
+      </div>
+
+      <div class="project-card reveal">
+        <div>
+          <div class="project-year">2025</div>
+          <div class="project-name">Data Pipeline ETL</div>
+          <div class="project-subtitle">Pipeline de données automatisé</div>
+          <div class="project-desc">
+            <ul>
+              <li>Pipeline ETL complet : collecte → nettoyage → transformation → stockage</li>
+              <li>Structuration avec Python & Pandas</li>
+              <li>Intégration dans une base PostgreSQL</li>
+              <li>Automatisation pour améliorer la qualité des données</li>
+            </ul>
+          </div>
+          <div class="project-stack">
+            <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">PostgreSQL</span><span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="project-number">03</div>
+      </div>
+
+      <div class="project-card reveal">
+        <div>
+          <div class="project-year">2025</div>
+          <div class="project-name">Machine Learning & MLflow</div>
+          <div class="project-subtitle">Expérimentation et gestion de modèles ML</div>
+          <div class="project-desc">
+            <ul>
+              <li>Entraînement de modèles de classification supervisée</li>
+              <li>Évaluation : accuracy, precision, recall</li>
+              <li>Suivi des expérimentations avec MLflow</li>
+            </ul>
+          </div>
+          <div class="project-stack">
+            <span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">MLflow</span>
+          </div>
+        </div>
+        <div class="project-number">04</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Parcours</div>
+    <h2 class="section-title">Expérience Professionnelle</h2>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Juillet — Août 2025</div>
+        <div class="timeline-role">Stage Data Analyst — Power BI</div>
+        <div class="timeline-company">THE HIVE · Tunis</div>
+        <ul class="timeline-points">
+          <li>Tableaux de bord dynamiques Power BI pour le suivi des KPIs internes</li>
+          <li>Nettoyage, structuration et analyse de données Excel & SQL</li>
+          <li>Collaboration avec l'équipe métier pour améliorer la prise de décision</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Janvier — Juin 2024</div>
+        <div class="timeline-role">Stage PFE — Développement Web</div>
+        <div class="timeline-company">Bee Play · Tunis</div>
+        <ul class="timeline-points">
+          <li>Plateforme web de gestion avec Laravel et base de données relationnelle</li>
+          <li>Dashboard administrateur, génération de tickets QR code et notifications</li>
+          <li>Sécurisation des accès et gestion des données utilisateurs</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Juillet — Août 2023</div>
+        <div class="timeline-role">Stage Data Analyst</div>
+        <div class="timeline-company">Compagnie des Phosphates de Gafsa · Gafsa</div>
+        <ul class="timeline-points">
+          <li>Collecte, nettoyage et analyse de données industrielles de production</li>
+          <li>Automatisation de tâches d'analyse avec Python, SQL & Excel</li>
+          <li>Rapports pour le suivi de performance et l'optimisation des processus</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">Formation</div>
+    <h2 class="section-title">Parcours Académique</h2>
+    <div class="edu-grid reveal">
+
+      <div class="edu-card">
+        <div class="edu-degree">Cycle Ingénieur en Data Science & Intelligence Artificielle</div>
+        <div class="edu-school">Tek-Up University</div>
+        <div class="edu-year">2025 — Présent</div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-degree">Licence en Sciences de l'Information et Multimédia</div>
+        <div class="edu-school">ISIMG, Tunisie</div>
+        <div class="edu-year">2024</div>
+        <div class="edu-mention">✦ Mention Très Bien</div>
+      </div>
+
+    </div>
+
+    <!-- Languages -->
+    <div style="margin-top: 4rem;">
+      <div class="section-label">Communication</div>
+      <h3 class="section-title" style="font-size: 1.8rem; margin-bottom: 2rem;">Langues</h3>
+      <div class="lang-grid reveal">
+        <div class="lang-card">
+          <div class="lang-name">Français</div>
+          <div class="lang-level">Courant</div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 90%"></div></div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-name">Anglais</div>
+          <div class="lang-level">Professionnel</div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 75%"></div></div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-name">Italien</div>
+          <div class="lang-level">Élémentaire</div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 30%"></div></div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-name">Arabe</div>
+          <div class="lang-level">Natif</div>
+          <div class="lang-bar"><div class="lang-fill" style="width: 100%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-label" style="justify-content:center;">Travaillons ensemble</div>
+      <h2 class="section-title" style="margin-bottom: 1rem;">Contactez-moi</h2>
+      <p style="color: var(--muted); margin-bottom: 1rem;">
+        Je cherche un stage de 2 mois en Data Engineering / Data Science / IA.<br>
+        N'hésitez pas à me contacter !
+      </p>
+      <a href="mailto:marzougui.tassnime@gmail.com" class="contact-email">marzougui.tassnime@gmail.com</a>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/tassnim-marzougui-150222219" target="_blank" class="btn-primary">in LinkedIn</a>
+        <a href="https://github.com/Tassnim-Marzougui" target="_blank" class="btn-outline">⬡ GitHub</a>
+        <a href="tel:+21628618524" class="btn-outline">📞 +216 28 618 524</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Tassnim Marzougui · Designed with ♥ · Ariana, Tunisie</p>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
